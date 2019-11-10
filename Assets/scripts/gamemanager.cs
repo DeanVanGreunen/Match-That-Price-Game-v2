@@ -10,6 +10,17 @@ public class gamemanager : MonoBehaviour
 {
     // MainMenu
 
+    public AudioClip coin_in_clip;
+    public AudioClip coin_out_clip;
+    public AudioClip win_clip;
+    public AudioClip lose_clip;
+
+
+    public AudioSource coin_in;
+    public AudioSource coin_out;
+    public AudioSource win_as;
+    public AudioSource lose_as;
+
     public GameObject MainMenuCanvas;
     public GameObject LostMenuCanvas;
     public GameObject WinMenuCanvas;
@@ -64,6 +75,11 @@ public class gamemanager : MonoBehaviour
         Timer.text = maxTimeLeft.ToString();
         ResetLevels();
         ResetCashCounters();
+
+        coin_in.clip = coin_in_clip;
+        coin_out.clip = coin_out_clip;
+        win_as.clip = win_clip;
+        lose_as.clip = lose_clip;
     }
 
     public void ResetCashCounters()
@@ -235,7 +251,8 @@ public class gamemanager : MonoBehaviour
 
     public void GameWon()
     {
-        if(currentLevel == 99)
+        win_as.Play(0);
+        if (currentLevel == 99)
         {
             MainMenuCanvas.SetActive(false);
             MainMenuCanvas.SetActive(false);
@@ -251,15 +268,16 @@ public class gamemanager : MonoBehaviour
     public void GameLost()
     {
         //Dispay Game Lost Message
-        currentLevel = 0;
-        LoseMessage.text = "You Lost!\n\nYou've Reached Level "+currentLevel+"\n\nClick Here To Start A New Game";
+        lose_as.Play(0);
+        LoseMessage.text = "You Lost!\n\nYou've Reached Level " + currentLevel + "\n\nClick Here To Start A New Game";
         LostMenuCanvas.SetActive(true);
         ResetLevels();
+        currentLevel = 0;
     }
 
     void Update()
     {
-        if(isRunning)
+        if (isRunning)
         {
             timeLeft -= Time.deltaTime;
             if (timeLeft <= 0)
@@ -278,7 +296,7 @@ public class gamemanager : MonoBehaviour
                 }
             } else
             {
-                if(TargetValue == change.GetTotal())
+                if (TargetValue == change.GetTotal())
                 {
                     loop1++;
                     if (loop1 == 30)
@@ -293,7 +311,7 @@ public class gamemanager : MonoBehaviour
             // Update UI Timer and Slider
             Timer.text = timeLeft.ToString();
             var TimerFGRectTransform = TimerFG.transform as RectTransform;
-            TimerFGRectTransform.sizeDelta = new Vector2(1920 * (timeLeft/maxTimeLeft), TimerFGRectTransform.sizeDelta.y);
+            TimerFGRectTransform.sizeDelta = new Vector2(1920 * (timeLeft / maxTimeLeft), TimerFGRectTransform.sizeDelta.y);
 
             // Update UI Current Tota Value
             TargetValueText.text = TargetValue.ToString("C");
@@ -315,81 +333,83 @@ public class gamemanager : MonoBehaviour
             CreateCashCounter();
         }
     }
-        
+
     // UI Inputs for coins
     #region 500
-    public void b500a() {change.b500++; }
-    public void b500m() { if (change.b500 > 0) change.b500--; }
+    public void b500a() { change.b500++; coin_in.Play(0); }
+    public void b500m() { if (change.b500 > 0) change.b500--; coin_out.Play(0); }
     #endregion
 
     #region 200
-    public void b200a() { change.b200++; }
-    public void b200m() { if (change.b200 > 0) change.b200--; }
+    public void b200a() { change.b200++; coin_in.Play(0); }
+    public void b200m() { if (change.b200 > 0) { change.b200--; coin_out.Play(0); } }
     #endregion
 
     #region 100
-    public void b100a() { change.b100++; }
-    public void b100m() { if (change.b100 > 0) change.b100--; }
+    public void b100a() { change.b100++; coin_in.Play(0); }
+    public void b100m() { if (change.b100 > 0) { change.b100--; coin_out.Play(0); } }
     #endregion
 
     #region 50
-    public void b50a() { change.b50++; }
-    public void b50m() { if (change.b50 > 0) change.b50--; }
+    public void b50a() { change.b50++; coin_in.Play(0); }
+    public void b50m() { if (change.b50 > 0) { change.b50--; coin_out.Play(0); } }
     #endregion
 
     #region 20
-    public void b20a() { change.b20++; }
-    public void b20m() { if (change.b20 > 0) change.b20--; }
+    public void b20a() { change.b20++; coin_in.Play(0); }
+    public void b20m() { if (change.b20 > 0){ change.b20--; coin_out.Play(0); } }
     #endregion
 
     #region 10
-    public void b10a() { change.b10++; }
-    public void b10m() { if (change.b10 > 0) change.b10--; }
+    public void b10a() { change.b10++; coin_in.Play(0); }
+    public void b10m() { if (change.b10 > 0) { change.b10--; coin_out.Play(0); } }
     #endregion
 
     #region 5
-    public void b5a() { change.b5++; }
-    public void b5m() { if (change.b5 > 0) change.b5--; }
+    public void b5a() { change.b5++; coin_in.Play(0); }
+    public void b5m() { if (change.b5 > 0) {change.b5--; coin_out.Play(0); } }
     #endregion
 
     #region 2
-    public void b2a() { change.b2++; }
-    public void b2m() { if (change.b2 > 0) change.b2--; }
+    public void b2a() { change.b2++; coin_in.Play(0); }
+    public void b2m() { if (change.b2 > 0){ change.b2--; coin_out.Play(0); } }
     #endregion
 
     #region 1
-    public void b1a() { change.b1++; }
-    public void b1m() { if (change.b1 > 0) change.b1--; }
+    public void b1a() { change.b1++; coin_in.Play(0); }
+    public void b1m() { if (change.b1 > 0){ change.b1--; coin_out.Play(0); } }
     #endregion
 
     #region c50
-    public void c50a() { change.c50++; }
-    public void c50m() { if (change.c50 > 0) change.c50--; }
+    public void c50a() { change.c50++; coin_in.Play(0); }
+    public void c50m() { if (change.c50 > 0) {change.c50--; coin_out.Play(0); } }
     #endregion
 
     #region c20
-    public void c20a() { change.c20++; }
-    public void c20m() { if (change.c20 > 0) change.c20--; }
+    public void c20a() { change.c20++; coin_in.Play(0); }
+    public void c20m() { if (change.c20 > 0) {change.c20--; coin_out.Play(0); } }
     #endregion
 
     #region c10
-    public void c10a() { change.c10++; }
-    public void c10m() { if (change.c10 > 0) change.c10--; }
+    public void c10a() { change.c10++; coin_in.Play(0); }
+    public void c10m() { if (change.c10 > 0) {change.c10--; coin_out.Play(0); }
+}
     #endregion
 
     #region c5
-    public void c5a() { change.c5++; }
-    public void c5m() { if (change.c5 > 0) change.c5--; }
+    public void c5a() { change.c5++; coin_in.Play(0); }
+    public void c5m() { if (change.c5 > 0) {change.c5--; coin_out.Play(0); } }
     #endregion
     
     #region c2
-    public void c2a() { change.c2++; }
-    public void c2m() { if (change.c2 > 0) change.c2--; }
+    public void c2a() { change.c2++; coin_in.Play(0); }
+    public void c2m() { if (change.c2 > 0) {change.c2--; coin_out.Play(0); }
+}
     #endregion
 
     #region c1
-    public void c1a() { change.c1++; }
-    public void c1m() { if(change.c1 > 0)change.c1--; }
+    public void c1a() { change.c1++; coin_in.Play(0); }
+    public void c1m() { if(change.c1 > 0){change.c1--; coin_out.Play(0); } }
     #endregion
 }
 
